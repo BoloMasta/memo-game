@@ -1,3 +1,7 @@
+const modalStart = document.querySelector(".modal-start");
+const modalWin = document.querySelector(".modal-win");
+const modalLose = document.querySelector(".modal-lose");
+
 const timeRemaining = document.querySelector("#time-remaining");
 const pairs = document.querySelector("#pairs");
 const cards = document.querySelectorAll(".card");
@@ -10,6 +14,7 @@ const imagesArray = [
   { icon: "🧲", color: "#03fcd3" },
 ];
 let activeCards = [];
+let pairsFound = 0;
 
 cards.forEach((card) =>
   card.addEventListener("click", () => {
@@ -30,45 +35,62 @@ function shuffleColors() {
   });
 }
 
+function addListeners(card) {
+  activeCards.push(card);
+  console.log(activeCards);
+
+  if (activeCards.length === 2) {
+    if (
+      activeCards[0].children[1].textContent ===
+      activeCards[1].children[1].textContent
+    ) {
+      activeCards = [];
+      pairsFound++;
+    } else {
+      setTimeout(() => {
+        activeCards.forEach((card) => card.classList.remove("visible"));
+        activeCards = [];
+      }, 1000);
+    }
+  }
+}
+
 function startGame() {
   shuffleColors();
   let time = 60;
-  let pairsFound = 0;
+
   let timeInterval = setInterval(() => {
     timeRemaining.textContent = time;
     pairs.textContent = pairsFound;
     if (time === 0) {
       clearInterval(timeInterval);
-      alert("Game Over");
+      cards.forEach((card) => card.classList.remove("visible"));
+      modalLose.classList.add("display");
+      modalLose.addEventListener("click", () => {
+        modalLose.classList.remove("display");
+        startGame();
+      });
     }
     if (pairsFound === 6) {
       clearInterval(timeInterval);
-      alert("You Win");
+      cards.forEach((card) => card.classList.remove("visible"));
+      modalWin.classList.add("display");
+      modalWin.addEventListener("click", () => {
+        modalWin.classList.remove("display");
+        startGame();
+      });
     }
     time--;
   }, 1000);
 
   cards.forEach((card) => {
     card.addEventListener("click", () => {
-      activeCards.push(card);
-      if (activeCards.length === 2) {
-        cards.forEach((card) => card.removeEventListener("click", () => {}));
-
-        if (
-          activeCards[0].children[1].textContent ===
-          activeCards[1].children[1].textContent
-        ) {
-          activeCards = [];
-          pairsFound++;
-        } else {
-          setTimeout(() => {
-            activeCards.forEach((card) => card.classList.remove("visible"));
-            activeCards = [];
-          }, 1000);
-        }
-      }
+      addListeners(card);
     });
   });
 }
 
-startGame();
+modalStart.addEventListener("click", () => {
+  startGame();
+  modalStart.classList.remove("display");
+});

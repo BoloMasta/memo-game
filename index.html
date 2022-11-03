@@ -9,6 +9,22 @@
     <title>MEMO game</title>
   </head>
   <body>
+
+<div class="modal-start display">
+    <h1 class="modal-text">Find all pairs to win the game</h1>
+    <p class="modal-restart">Click to start game</p>
+</div>
+
+<div class="modal-win">
+    <h1 class="modal-text">Bravo, you won!</h1>
+    <p class="modal-restart">Click to restart game</p>
+</div>
+
+<div class="modal-lose">
+    <h1 class="modal-text">You lost</h1>
+    <p class="modal-restart">Click to restart game</p>
+</div>
+
     <h1><span id="memo">MEMO</span> game</h1>
     <div class="game-container">
       <div class="game-info-container">
@@ -20,10 +36,7 @@
         <div class="card-back card-face">
           <img class="card-back-image" src="card.webp" alt="card" />
         </div>
-        <div class="card-front card-face">
-          <img class="card-back-image" src="card.webp" alt="card" />
-          <p class="card-front-text"></p>
-        </div>
+        <div class="card-front card-face"><p class="card-front-text"></p></div>
       </div>
       <!-- 2 -->
       <div class="card">
