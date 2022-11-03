@@ -9,7 +9,7 @@
 body {
   font-family: "Poor Story", cursive;
   font-size: 16px;
-  background: linear-gradient(to right, #e9d362, #333333);
+  background: linear-gradient(to right, #e9d362, #5f5f6d);
 }
 
 h1 {
@@ -70,7 +70,7 @@ h1 {
 }
 
 .card-back {
-    background: linear-gradient(to right, #000000, #434343); 
+  background: linear-gradient(to right, #222222, #5e5e5e);
 }
 
 .card-back-image {
@@ -88,6 +88,11 @@ h1 {
   font-size: 3rem;
 }
 
+.card-front-text {
+  transition: all 0.3s ease-in-out;
+  text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
+}
+
 .card.visible .card-back {
   transform: rotateY(-180deg);
 }
@@ -99,4 +104,21 @@ h1 {
 .card-front-image {
   width: 70%;
   background-color: red;
+}
+
+.card.visible .card-front-text {
+  animation: move 5s linear 1s infinite;
+}
+
+@keyframes move {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-20deg);
+  }
+  75% {
+    transform: rotate(20deg);
+  }
 }
