@@ -1,0 +1,102 @@
+@import url("https://fonts.googleapis.com/css2?family=Poor+Story&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Poor Story", cursive;
+  font-size: 16px;
+  background: linear-gradient(to right, #e9d362, #333333);
+}
+
+h1 {
+  margin: 30px auto;
+  font-size: 5rem;
+  text-align: center;
+  text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
+}
+
+#memo {
+  background-image: linear-gradient(
+    89.4deg,
+    rgb(141, 6, 33) 0.8%,
+    rgb(8, 22, 61) 99.4%
+  );
+  background-clip: unset;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.game-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+  max-width: 550px;
+  margin: 0 auto;
+  perspective: 500px;
+}
+
+.game-info-container {
+  grid-column: 1/ -1;
+  display: flex;
+  justify-content: space-around;
+}
+
+.game-info {
+  font-size: 3rem;
+}
+
+.card {
+  width: 115px;
+  height: 155px;
+  position: relative;
+  cursor: pointer;
+}
+
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backface-visibility: hidden;
+  transition: transform 0.5s ease-in-out;
+  border-radius: 0.5rem;
+  border: 2px solid rgb(36, 36, 36);
+}
+
+.card-back {
+    background: linear-gradient(to right, #000000, #434343); 
+}
+
+.card-back-image {
+  width: 70%;
+  transition: all 0.3s ease-in-out;
+}
+
+.card-back:hover .card-back-image {
+  transform: scale(1.2);
+}
+
+.card-front {
+  transform: rotateY(180deg);
+  background: #ec1c1c;
+  font-size: 3rem;
+}
+
+.card.visible .card-back {
+  transform: rotateY(-180deg);
+}
+
+.card.visible .card-front {
+  transform: rotateY(0);
+}
+
+.card-front-image {
+  width: 70%;
+  background-color: red;
+}
