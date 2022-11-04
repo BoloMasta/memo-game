@@ -14,15 +14,6 @@ const imagesArray = [
   { icon: "🧲", color: "#03fcd3" },
 ];
 let activeCards = [];
-let pairsFound = 0;
-
-cards.forEach((card) =>
-  card.addEventListener("click", () => {
-    if (activeCards.length < 2) {
-      card.classList.add("visible");
-    }
-  })
-);
 
 function shuffleColors() {
   const doubleArray = [...imagesArray, ...imagesArray];
@@ -35,33 +26,41 @@ function shuffleColors() {
   });
 }
 
-function addListeners(card) {
-  activeCards.push(card);
-  console.log(activeCards);
-
-  if (activeCards.length === 2) {
-    if (
-      activeCards[0].children[1].textContent ===
-      activeCards[1].children[1].textContent
-    ) {
-      activeCards = [];
-      pairsFound++;
-    } else {
-      setTimeout(() => {
-        activeCards.forEach((card) => card.classList.remove("visible"));
-        activeCards = [];
-      }, 1000);
-    }
-  }
-}
-
 function startGame() {
   shuffleColors();
   let time = 60;
+  let pairsFound = 0;
 
+  function addListeners(card) {
+    if (card.classList.contains("visible")) {
+      return;
+    } else if (activeCards.length < 2) {
+      activeCards.push(card);
+      card.classList.add("visible");
+    }
+
+    if (activeCards.length === 2) {
+      if (
+        activeCards[0].children[1].textContent ===
+        activeCards[1].children[1].textContent
+      ) {
+        activeCards = [];
+        pairsFound++;
+      } else {
+        setTimeout(() => {
+          activeCards.forEach((card) => card.classList.remove("visible"));
+          activeCards = [];
+        }, 1000);
+      }
+    }
+  }
+
+  // timer
   let timeInterval = setInterval(() => {
     timeRemaining.textContent = time;
     pairs.textContent = pairsFound;
+
+    // lose
     if (time === 0) {
       clearInterval(timeInterval);
       cards.forEach((card) => card.classList.remove("visible"));
@@ -71,10 +70,13 @@ function startGame() {
         startGame();
       });
     }
+
+    // win
     if (pairsFound === 6) {
       clearInterval(timeInterval);
       cards.forEach((card) => card.classList.remove("visible"));
       modalWin.classList.add("display");
+      document.querySelector("#win-time").textContent = 60 - time;
       modalWin.addEventListener("click", () => {
         modalWin.classList.remove("display");
         startGame();
@@ -91,6 +93,6 @@ function startGame() {
 }
 
 modalStart.addEventListener("click", () => {
-  startGame();
   modalStart.classList.remove("display");
+  startGame();
 });
